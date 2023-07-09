@@ -1,17 +1,25 @@
 import React from "react";
 import QuestionItem from "./QuestionItem";
 
-function QuestionList({questionArr}) {
+function QuestionList({questionArr, handleDeleteUpdate}) {
 
   console.log("there:", questionArr)
 
-  const listElements = questionArr.map((item)=> {
+
+  function handleDeleteItem(deletedItem) {
+    console.log("Delete me!!", deletedItem)
+    const updatedItems = questionArr.filter((item) => item.id !== deletedItem.id);
+    handleDeleteUpdate(updatedItems);
+  }
+
+  let listElements = questionArr.map((item)=> {
     return (
-    <QuestionItem question={item} />
+    <QuestionItem
+    key= {item.id} 
+    question={item} 
+    handleDeleteItem={handleDeleteItem}/>
     )
   })
-
-
 
   return (
     <section>

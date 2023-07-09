@@ -8,6 +8,19 @@ function App() {
 
   const [questionArr, setQuestionArr] = useState([])
 
+  function handleQuestionUpdate(tempObj){
+    console.log("question list updates")
+    console.log(tempObj)
+    setQuestionArr([...questionArr, tempObj])
+    console.log("afterupdate:", questionArr)
+  }
+  console.log("afterupdate:", questionArr)
+
+  function handleDeleteUpdate(update){
+    setQuestionArr(update)
+  }
+ 
+
   useEffect(()=> {
     fetch("http://localhost:4000/questions")
     .then(r => r.json())
@@ -21,7 +34,7 @@ function App() {
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm /> : <QuestionList questionArr = {questionArr} />}
+      {page === "Form" ? <QuestionForm questionUpdate={handleQuestionUpdate}/> : <QuestionList questionArr={questionArr} handleDeleteUpdate={handleDeleteUpdate} />}
     </main>
   );
 }
